@@ -1,0 +1,35 @@
+{
+  "name": "react",
+  "version": "1.0.0",
+  "description": "简易的react实现",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "buildminify": "webpack --uglify=true",
+    "build": "webpack",
+    "start":"webpack-dev-server --hot --inline --content-base example/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/laughing-pic-zhu/react.git"
+  },
+  "keywords": [
+    "react"
+  ],
+  "author": "laughing",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/laughing-pic-zhu/react/issues"
+  },
+  "homepage": "https://github.com/laughing-pic-zhu/react#readme",
+  "devDependencies": {
+    "babel-core": "^6.17.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.16.0",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.16.2"
+  }
+}
