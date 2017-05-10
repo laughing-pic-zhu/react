@@ -1,4 +1,4 @@
-import React from './React';
+import React from './react/React';
 
 const container = document.getElementById('container');
 
