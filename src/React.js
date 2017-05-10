@@ -1,8 +1,21 @@
 const ReactElement = function (tagName, config, key) {
-    this.tagName = tagName;
+    this.type = tagName;
     this.props = config;
     this.key = key;
 };
+
+const ReactClass = function () {
+};
+ReactClass.prototype = Object.assign({}, {
+    getInitialState: function () {
+    },
+    componentWillMount: function () {
+    },
+    componentDidMount: function () {
+    },
+    render: function () {
+    }
+}, {constructor: ReactClass});
 
 const ReactTextComponent = function (str) {
     this.element = '' + str;
@@ -20,8 +33,8 @@ const ReactDomComponent = function (reactElement) {
 };
 
 ReactDomComponent.prototype.mountComponent = function (rootNodeId) {
-    const {tagName, props, key} = this.element;
-    const element = $(document.createElement(tagName));
+    const {type, props, key} = this.element;
+    const element = $(document.createElement(type));
     if (key) {
         this.rootNodeId = rootNodeId = key;
     } else {
@@ -44,16 +57,43 @@ ReactDomComponent.prototype.mountComponent = function (rootNodeId) {
 };
 
 
-const initComponentInstance = function (str) {
-    if (typeof str === 'string') {
-        return new ReactTextComponent(str);
-    } else if (typeof str === 'object') {
-        return new ReactDomComponent(str);
+const ReactCompositeComponent = function (reactClass) {
+    this.reactClass = reactClass;
+};
+
+ReactCompositeComponent.prototype.mountComponent = function (id) {
+    const ReactClass = this.reactClass;
+    const instance = new ReactClass();
+    instance.componentWillMount();
+
+    const template = instance.render();
+    const componentInstance = initComponentInstance(template);
+
+    $(document).one('documentReady', function () {
+        instance.componentDidMount();
+    });
+    return componentInstance.mountComponent(id);
+};
+
+
+const initComponentInstance = function (node) {
+    if (typeof node === 'string' || typeof node === 'number') {
+        return new ReactTextComponent(node);
+    } else if (typeof node === 'object' && typeof node.type === 'string') {
+        return new ReactDomComponent(node);
+    } else if (typeof node === 'function') {
+        return new ReactCompositeComponent(node);
     }
 };
 
 const React = {
     nextReactRootIndex: 0,
+    createClass: function (spec) {
+        const Constructor = function () {
+        };
+        Constructor.prototype = Object.assign({}, new ReactClass(), {constructor: Constructor}, spec);
+        return Constructor;
+    },
     createElement: function (tagName, props, textContent) {
         const key = props.key || '';
         const config = {};
@@ -74,6 +114,7 @@ const React = {
     render: function (str, container) {
         const componentInstance = initComponentInstance(str);
         $(container).append(componentInstance.mountComponent(React.nextReactRootIndex++));
+        $(document).trigger('documentReady');
     }
 };
 
