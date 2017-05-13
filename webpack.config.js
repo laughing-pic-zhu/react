@@ -25,7 +25,7 @@ module.exports = {
         app: [
             'webpack-dev-server/client',
             'webpack/hot/dev-server',
-            './src/index.js'
+            './src/app.js'
         ]
     },
 

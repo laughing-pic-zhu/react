@@ -5,12 +5,14 @@ import ReactClass from './reactClass';
 const React = {
     nextReactRootIndex: 0,
     createClass: function (spec) {
-        const Constructor = function () {
+        const Constructor = function (props) {
+            this.props = props;
+            this.state = this.getInitialState ? this.getInitialState() : {};
         };
         Constructor.prototype = Object.assign({}, new ReactClass(), {constructor: Constructor}, spec);
         return Constructor;
     },
-    createElement: function (tagName, props, textContent) {
+    createElement: function (tagName, props, ...textContent) {
         const key = props.key || '';
         const config = {};
         props.children = textContent;

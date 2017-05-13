@@ -8,7 +8,7 @@ const initComponentInstance = function (node) {
         return new ReactTextComponent(node);
     } else if (typeof node === 'object' && typeof node.type === 'string') {
         return new ReactDomComponent(node);
-    } else if (typeof node === 'function') {
+    } else if (typeof node === 'object' && typeof node.type === 'function') {
         return new ReactCompositeComponent(node);
     }
 };

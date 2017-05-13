@@ -1,5 +1,8 @@
 const ReactClass = function () {
+
 };
+
+
 ReactClass.prototype = Object.assign({}, {
     getInitialState: function () {
     },

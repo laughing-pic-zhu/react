@@ -1,3 +1,5 @@
+import initComponentInstance from './initComponentInstance';
+
 const ReactDomComponent = function (reactElement) {
     this.element = reactElement;
 };
@@ -17,7 +19,17 @@ ReactDomComponent.prototype.mountComponent = function (rootNodeId) {
         } else if (prop === 'className') {
             element.attr('class', value);
         } else if (prop === 'children') {
-            element.html(value);
+            if (Array.isArray(value) && value.length > 1) {
+                let sonId = 0;
+                const sonElement=[];
+                value.forEach(item=>{
+                    const componentInstance = initComponentInstance(item);
+                    sonElement.push(componentInstance.mountComponent(rootNodeId + '.' + sonId++));
+                });
+                element.html(sonElement);
+            }else{
+                element.html(value);
+            }
         } else {
             element.on(prop + '.' + rootNodeId, value);
         }
