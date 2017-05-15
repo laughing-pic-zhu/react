@@ -38,4 +38,8 @@ ReactDomComponent.prototype.mountComponent = function (rootNodeId) {
     return element.attr('data-reactid', rootNodeId);
 };
 
+ReactDomComponent.prototype.receiveComponent = function () {
+
+};
+
 export default ReactDomComponent;

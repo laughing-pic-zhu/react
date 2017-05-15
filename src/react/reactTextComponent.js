@@ -8,4 +8,7 @@ ReactTextComponent.prototype.mountComponent = function (id) {
     return $(document.createElement('span')).attr('data-reactid', id).html(this.element);
 };
 
+ReactTextComponent.prototype.receiveComponent = function (nextElement, nextState) {
+
+};
 export default ReactTextComponent;
