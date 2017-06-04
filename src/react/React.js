@@ -9,21 +9,18 @@ const React = {
             this.props = props;
             this.state = this.getInitialState ? this.getInitialState() : {};
         };
-        Constructor.prototype = Object.assign({}, new ReactClass(), {constructor: Constructor}, spec);
+        Constructor.prototype = Object.assign(new ReactClass(), {constructor: Constructor}, spec);
         return Constructor;
     },
     createElement: function (tagName, props, ...textContent) {
+        props=props||{};
         const key = props.key || '';
         const config = {};
         props.children = textContent;
 
         Object.keys(props).forEach(prop => {
             const value = props[prop];
-            const exec = /^on(.+)/.exec(prop);
-            if (exec && exec.length >= 2) {
-                const key = exec[1];
-                config[key] = value;
-            } else if (prop !== 'key') {
+            if (prop !== 'key') {
                 config[prop] = value;
             }
         });
@@ -31,7 +28,7 @@ const React = {
     },
     render: function (str, container) {
         const componentInstance = initComponentInstance(str);
-        $(container).append(componentInstance.mountComponent(React.nextReactRootIndex++));
+        $(container).append(componentInstance.mountComponent('',React.nextReactRootIndex++));
         $(document).trigger('documentReady');
     }
 };

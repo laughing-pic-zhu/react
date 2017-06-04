@@ -20,12 +20,18 @@ if (arr) {
     }
 }
 
+// app: [
+//     'webpack-dev-server/client',
+//     'webpack/hot/dev-server',
+//     './src/app.js'
+// ],
 module.exports = {
     entry: {
-        app: [
+
+        real: [
             'webpack-dev-server/client',
             'webpack/hot/dev-server',
-            './src/app.js'
+            './src/real.js'
         ]
     },
 

@@ -18,7 +18,7 @@ ReactClass.prototype = Object.assign({}, {
 
     setState: function (nextState) {
         const reactCompositeComponent = this._reactCompositeComponentInstance;
-        reactCompositeComponent.receiveComponent
+        reactCompositeComponent.receiveComponent(null, nextState)
     }
 
 }, {constructor: ReactClass});
